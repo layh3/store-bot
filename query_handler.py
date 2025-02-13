@@ -143,8 +143,3 @@ def process_customer_query(user_query):
     if query_data.get("price_query"):
         response += f"Price: ${result['price']}"
     return response
-
-
-if __name__ == "__main__":
-    user_query = input("Ask about a product or store info: ")
-    print(process_customer_query(user_query))
