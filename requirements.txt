@@ -1,0 +1,7 @@
+lancedb
+openai
+pytest
+tqdm
+pandas
+spacy
+streamlit
