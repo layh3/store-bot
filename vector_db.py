@@ -51,10 +51,3 @@ def find_product(query_text):
 
     return best_match.to_dict()
 
-if __name__ == "__main__":
-    # Sample test cases for validating both product & info search
-    print(find_product("tv's"))         # Test query for TV
-    print(find_product("iphone"))       # Test query for iPhone
-    print(find_product("milk"))         # Test query for Milk
-    print(find_product("store hours"))  # Test query for Store Hours
-    print(find_product("return policy")) # Test query for Return Policy
