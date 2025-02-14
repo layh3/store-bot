@@ -1,53 +1,71 @@
 import lancedb
 import pandas as pd
 import spacy
+import re
 import numpy as np
 
-# Load spaCy's medium-sized word embedding model for text processing
+# Load spaCy's medium-sized word embedding model
 nlp = spacy.load("en_core_web_md")
 
-# Connect to the LanceDB database
+# Connect to LanceDB
 db = lancedb.connect("store_db")
-table = db.open_table("products")
 
-def find_product(query_text):
+def singularize(word):
+    """Converts plural words to singular form using basic regex rules."""
+    return re.sub(r's$', '', word, flags=re.IGNORECASE)
+
+
+def find_entry(query_text, table_name):
     """
-    Uses vector similarity search to find the best-matching product or store information.
+    Uses vector similarity search to find the best match in the specified table.
 
     Parameters:
-        query_text (str): The search query (product name, department, or store info topic).
+        query_text (str): The search query (product name or info topic).
+        table_name (str): The name of the table to search ('products' or 'store_info').
 
     Returns:
-        dict: The most relevant match (product or store info), otherwise None.
+        dict: The best matching result or None if no match found.
     """
-    if not query_text.strip():
-        return None  # Return None for empty queries
+    # Preprocess the query: lowercase and singularize
+    cleaned_query = singularize(query_text.lower()).strip()
 
-    df = table.to_pandas()
+    if not cleaned_query:
+        return None
 
-    # Generate an embedding for the query using spaCy
-    query_embedding = np.array(nlp(query_text).vector)
+    # Open the correct table
+    table = db.open_table(table_name)
+    df = table.search().limit(1000).to_pandas()
 
-    # Compute cosine similarity between the query and stored embeddings
+
+    if df.empty:
+        return None
+
+    # Generate the query embedding
+    query_embedding = np.array(nlp(cleaned_query).vector)
+
+    # Calculate cosine similarity
     df["similarity"] = df["embedding"].apply(
         lambda emb: np.dot(np.array(emb), query_embedding) / 
                     (np.linalg.norm(emb) * np.linalg.norm(query_embedding))
     )
 
-    if df.empty:
-        return None  # Return None if database is empty or retrieval fails
+    # Access the top 5 matches (could be usedto provide additional products in the future)
+    top_matches = df.sort_values("similarity", ascending=False).head(5)
 
-    # Retrieve the most similar match
-    best_match = df.sort_values("similarity", ascending=False).iloc[0]
+    # Get the best match
+    best_match = top_matches.iloc[0]
 
-    # Ensure 'type' exists (either product or info)
-    entry_type = best_match.get("type", "unknown")
+    # Adjust threshold based on table type and query length
+    similarity_threshold = 0.55 if table_name == "store_info" else 0.75
 
-    # Adjust similarity threshold for info queries
-    similarity_threshold = 0.60 if entry_type == "info" else 0.75
-
+    # Filter out potential false positives
     if best_match["similarity"] < similarity_threshold:
-        return None  # No valid match found if similarity is too low
+        print(f"No valid match found for '{query_text}' (Best similarity: {best_match['similarity']:.2f})")
+        return None
+
+    # Ensure the match shares a keyword with the query
+    if not any(word in best_match.get("item", best_match.get("topic", "")).lower() for word in cleaned_query):
+        print(f"Potential false positive: '{best_match.get('item', best_match.get('topic', ''))}' doesn't match '{cleaned_query}'")
+        return None
 
     return best_match.to_dict()
-

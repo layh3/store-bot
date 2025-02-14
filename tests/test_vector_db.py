@@ -1,54 +1,77 @@
 import pytest
-from vector_db import find_product
+from vector_db import find_entry
 
 # --- Product Search Tests ---
 
 def test_find_existing_product():
-    """Test retrieving a product that exists in the database."""
-    result = find_product("iPhone 15")
+    result = find_entry("iPhone 15", "products")
     assert result is not None
-    assert result["item"] == "iPhone 15"
+    assert result["item"].lower() == "iphone 15"
+
 
 def test_find_non_existing_product():
-    """Test searching for a product that does not exist in the database."""
-    result = find_product("PlayStation 5")
-    assert result is None  # Should return None for products not in DB
+    result = find_entry("PlayStation 5", "products")
+    assert result is None
+
 
 def test_find_similar_product():
-    """Test searching for a product with slight variations in the query."""
-    result = find_product("milk")
+    result = find_entry("milks", "products")
     assert result is not None
-    assert "milk" in result["item"].lower()  # Should match "Milk"
+    assert "milk" in result["item"].lower()
+
+
+def test_find_partial_product_name():
+    result = find_entry("iPhon", "products")
+    assert result is not None
+    assert "iphone" in result["item"].lower()
 
 # --- Store Information Tests ---
 
 def test_find_store_hours():
-    """Test retrieving store hours from the database."""
-    result = find_product("store hours")
+    result = find_entry("store hours", "store_info")
     assert result is not None
-    assert result["item"] == "Store Hours"
-    assert "open" in result["content"].lower()  # Ensuring content describes store hours
+    assert result["topic"] == "Store Hours"
+    assert "open" in result["content"].lower()
+
 
 def test_find_return_policy():
-    """Test retrieving the store return policy."""
-    result = find_product("return policy")
+    result = find_entry("return policy", "store_info")
     assert result is not None
-    assert result["item"] == "Return Policy"
-    assert "return" in result["content"].lower()  # Ensuring relevant content is returned
+    assert result["topic"] == "Return Policy"
+    assert "return" in result["content"].lower()
 
-# --- Failure & Edge Case Tests ---
 
-def test_find_nonexistent_product():
-    """Test searching for a completely fictional product."""
-    result = find_product("Flying Car")
-    assert result is None  # Should return None for a non-existent product
+def test_find_department_info():
+    result = find_entry("electronics", "store_info")
+    assert result is not None
+    assert result["topic"] == "Electronics"
+    assert "phones" in result["content"].lower()
+
+
+# --- Edge Cases ---
 
 def test_find_empty_string():
-    """Test handling of an empty string query."""
-    result = find_product("")
-    assert result is None  # Should return None for an empty query
+    result = find_entry("", "products")
+    assert result is None
+
 
 def test_find_gibberish():
-    """Test handling of random gibberish input."""
-    result = find_product("!@#$%^&*()")
-    assert result is None  # Should return None for a meaningless query
+    result = find_entry("!@#$%^&*()", "products")
+    assert result is None
+
+
+def test_find_info_partial():
+    result = find_entry("return", "store_info")
+    assert result is not None
+    assert "return" in result["content"].lower()
+
+
+def test_find_low_similarity_product():
+    result = find_entry("zyxwvutsrq", "products")
+    assert result is None
+
+
+def test_find_low_similarity_info():
+    result = find_entry("abcdxyz", "store_info")
+    assert result is None
+
