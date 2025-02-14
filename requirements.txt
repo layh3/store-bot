@@ -1,5 +1,5 @@
 lancedb
-openai
+openai==0.27.2
 pytest
 tqdm
 pandas
