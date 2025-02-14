@@ -13,6 +13,11 @@ sk-proj-ZTa_7EPXH-SA4DScLuqqGq8x1s8V57a5WSaJs60W0FyuD_jZtEad_1GqfAH0Eig6eNDc7FXt
 
 Save the file and run the chatbot as usual.
 
+## Python version
+
+This must be run with python 3.10 or newer
+The preferred version is Python 3.11.3
+
 ## Overview
 
 This AI-powered store assistant is designed to help customers find products, check availability, and retrieve pricing information using GPT-4 and LanceDB. The chatbot processes customer queries, determines the correct department, and provides relevant responses based on the store's inventory.
@@ -23,13 +28,6 @@ This AI-powered store assistant is designed to help customers find products, che
 -   Stores product data in LanceDB with vector embeddings for efficient retrieval
 -   Supports semantic search to match user queries with the best available products
 -   Runs as a web-based chatbot powered by Streamlit
-
-## Installation
-
-### Clone the Repository
-
-git clone https://github.com/yourusername/store-bot.git
-cd store-bot
 
 ### Install Dependencies
 
