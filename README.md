@@ -9,7 +9,7 @@ Find this line near the top:
 openai.api_key = "YOUR_OPENAI_API_KEY_HERE"
 
 Replace "YOUR_OPENAI_API_KEY_HERE" with the provided API key:
-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
+sk-proj-k1GW9zWC8U4iozrPG_ijowXkky9riMXWQQgKTSxylsUB0SrSiTE1mmcoVlnFiscFvPir4i1tFuT3BlbkFJL2paAY2rlRaMTzdQk3d5ZpiXoK_iG-\_XaxyYuzIJcdwVZG51P1on_TtmkdSX9-JDck4iTN0-YA
 
 Save the file and run the chatbot as usual.
 

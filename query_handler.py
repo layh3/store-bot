@@ -4,7 +4,7 @@ import re
 from vector_db import find_entry
 
 # API key for OpenAI GPT-4 (left in for exam reviewer)
-openai.api_key = "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"
+openai.api_key = "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"
 
 def singularize(word):
     """Convert plural words to singular form."""
