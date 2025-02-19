@@ -1,11 +1,11 @@
 import openai
 import json
 import re
-import os
 from vector_db import find_entry
 
+
 # API key for OpenAI GPT-4 (left in for exam reviewer)
-openai.api_key = os.getenv("OPENAI_API_KEY")
+openai.api_key = "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"
 
 def singularize(word):
     """Convert plural words to singular form."""
