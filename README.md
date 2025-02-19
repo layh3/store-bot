@@ -1,5 +1,18 @@
 # Store Assistant (AI-Powered)
 
+## Important: API Key Setup for Exam Review
+
+This project requires an OpenAI API key to function. Since GitHub blocks secret keys from being pushed, you must manually add the key in query_handler.py.
+
+Locate the query_handler.py file.
+Find this line near the top:
+openai.api_key = "YOUR_OPENAI_API_KEY_HERE"
+
+Replace "YOUR_OPENAI_API_KEY_HERE" with the provided API key:
+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
+
+Save the file and run the chatbot as usual.
+
 ## Python version
 
 This must be run with python 3.10 or newer
