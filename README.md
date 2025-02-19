@@ -87,7 +87,7 @@ python -m spacy download en_core_web_md
 
 #### If pytest Fails
 
-Ensure all dependencies are installed:
+Ensure all dependencies are installed
 
 pip install -r requirements.txt
 
