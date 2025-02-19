@@ -8,8 +8,7 @@ Locate the query_handler.py file.
 Find this line near the top:
 openai.api_key = "YOUR_OPENAI_API_KEY_HERE"
 
-Replace "YOUR_OPENAI_API_KEY_HERE" with the provided API key:
-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
+Replace "Add Given Api Key Here" with the provided API key from the submission email:
 
 Save the file and run the chatbot as usual.
 
