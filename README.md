@@ -6,7 +6,7 @@ This project requires an OpenAI API key to function. Since GitHub blocks secret 
 
 Locate the query_handler.py file.
 Find this line near the top:
-openai.api_key = "YOUR_OPENAI_API_KEY_HERE"
+openai.api_key = "Add Given Api Key Here"
 
 Replace "Add Given Api Key Here" with the provided API key from the submission email:
 
