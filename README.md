@@ -9,6 +9,19 @@ Find this line near the top:
 openai.api_key = "YOUR_OPENAI_API_KEY_HERE"
 
 Replace "YOUR_OPENAI_API_KEY_HERE" with the provided API key:
+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
+
+Save the file and run the chatbot as usual.
+
+## Important: API Key Setup for Exam Review
+
+This project requires an OpenAI API key to function. Since GitHub blocks secret keys from being pushed, you must manually add the key in query_handler.py.
+
+Locate the query_handler.py file.
+Find this line near the top:
+openai.api_key = "YOUR_OPENAI_API_KEY_HERE"
+
+Replace "YOUR_OPENAI_API_KEY_HERE" with the provided API key:
 sk-proj-k1GW9zWC8U4iozrPG_ijowXkky9riMXWQQgKTSxylsUB0SrSiTE1mmcoVlnFiscFvPir4i1tFuT3BlbkFJL2paAY2rlRaMTzdQk3d5ZpiXoK_iG-\_XaxyYuzIJcdwVZG51P1on_TtmkdSX9-JDck4iTN0-YA
 
 Save the file and run the chatbot as usual.
